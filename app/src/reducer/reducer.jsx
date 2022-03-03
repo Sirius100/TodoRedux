@@ -19,12 +19,12 @@ export default function reducer(state, action) {
           ...action.payload
         },
       ]
-    }
+    }/**выполненая задача */
     case 'isComplete':{
       return [
         ...state
       ]
-    }
+    }/**удалить задачу */
     case 'isDelete':{
       const newState = state.filter((task) => !task.isDelete);
       return [...newState]

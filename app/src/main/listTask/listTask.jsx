@@ -15,7 +15,6 @@ const ListTask = styled.div`
 `
 
 export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
-  console.log('im run task ClistTask');
   const textArea = useRef();
   const [tasks, dispatchAdd] = useReducer(reducer, [])
 
