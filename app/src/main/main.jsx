@@ -1,8 +1,10 @@
 import styled from 'styled-components'
 import React, {useContext} from 'react';
+import { Routes, Route } from "react-router-dom";
 import {baseTheme} from '../theme/theme';
 import { AppContext } from '../app/App';
 import { WrapperTask } from './wrapperTask/wrapperTask';
+import { Home } from './home/home';
 
 const ComponentMain = styled.main`
   display: flex;
@@ -20,7 +22,13 @@ export const Main = () =>  {
   const {themeBgBoolean} = useContext(AppContext)
   return (
     <ComponentMain bg={themeBgBoolean.theme} brd={themeBgBoolean}>
-      <WrapperTask themeBgBoolean={themeBgBoolean}/>
+      <Routes>
+
+        <Route path="/" element={<Home />} />
+        <Route path="Todo" element={<WrapperTask themeBgBoolean={themeBgBoolean}/>} />
+
+      </Routes>
+
     </ComponentMain>
 
   )

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import React, {useContext} from 'react';
-import {Navbar} from './navbar/navbar';
 import {BtnChangeTheme} from '../header/changeTheme/changeTheme';
-
-
+import {Button} from 'react-bootstrap';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import {baseTheme} from '../theme/theme';
-
+// import {Menu} from './overlayTrigger/overlay';
 import { AppContext } from '../app/App';
 
 const ComponentHeader = styled.header`
@@ -24,7 +24,26 @@ const ComponentHeader = styled.header`
   transition: all, .6s;
 `
 
+const popover = (
+  <Popover id="popover-basic">
+    <Popover.Header as="h3">Hello Human</Popover.Header>
+    <Popover.Body>
+      Эта кнопка тут не просто так!&nbsp;
+      <strong>Она без функционала,&nbsp;</strong>
+      просто для дизайна.
+    </Popover.Body>
+  </Popover>
+);
 
+const OverlayTriggerInsideButton = React.memo( () => {
+  return(
+    <>
+      <OverlayTrigger trigger="click" placement="right" overlay= {popover}>
+        <Button variant="info">Menu</Button>
+      </OverlayTrigger>
+    </>
+  )
+})
 
 export function Header() {
 
@@ -36,7 +55,7 @@ export function Header() {
      * brd - border разделов {header, footer, main}
      */
     <ComponentHeader bg={themeBgBoolean.theme} brd={themeBgBoolean.theme}>
-      <Navbar bg={themeBgBoolean.theme} />
+      <OverlayTriggerInsideButton/>
       <BtnChangeTheme />
     </ComponentHeader>
 

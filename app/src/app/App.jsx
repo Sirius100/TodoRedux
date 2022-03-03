@@ -7,6 +7,8 @@ import {ThemeProvider} from 'styled-components';
 import {baseTheme} from '../theme/theme';
 import reducer from '../reducer/reducer';
 
+
+
 const App = styled.div`
   transition: all .6s;
   text-align: center;
