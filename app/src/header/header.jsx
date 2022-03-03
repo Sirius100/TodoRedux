@@ -24,8 +24,6 @@ const ComponentHeader = styled.header`
   transition: all, .6s;
 `
 
-
-
 export function Header() {
 
   const {themeBgBoolean} = useContext(AppContext)

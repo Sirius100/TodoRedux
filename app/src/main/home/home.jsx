@@ -16,10 +16,21 @@ export const Home = React.memo( ({textColor}) => {
         <h1>Проект Todo</h1>
         <hr />
         <p>
-          Этот проект создан с использование библиотек react, react-router, react-bootstrap, redux, styled-companent!
+          <code>
+            Этот проект создан с использование библиотек react, react-router, react-bootstrap, redux, styled-companent!
+          </code>
         </p>
       </section>
     </StyleHome>
 
   )
 })
+
+/*
+{
+  "userId": 1,
+  "id": 4,
+  "title": "et porro tempora",
+  "completed": true
+},
+*/

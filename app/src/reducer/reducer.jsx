@@ -1,3 +1,4 @@
+import {taskRequest} from './requestPlacehold';
 
 export default function reducer(state, action) {
   switch(action.type) {
@@ -7,8 +8,14 @@ export default function reducer(state, action) {
         btnCaption : state.btnCaption === "Night"? "Light": "Night",
         theme: !state.theme,
       }
+
     /*раздел вызов формы для ввода задачи*/
     case 'add': // нажатие на кнопку "Add"
+    let request = taskRequest();
+    console.log("отработал код в reduce");
+    var task = null;
+    Promise.any([request]).then( (response) => response );
+    console.log("task in reducer: ", task);
       return { visibleForm: !state.visibleForm}
     /*раздел изменения статуса задачи (добавить, выполненая задача, удалить задачу)*/
     case 'addTask': {// нажатие на кнопку "Add Task"

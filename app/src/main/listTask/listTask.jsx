@@ -42,11 +42,13 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
         <Modal.Dialog>
           <Modal.Header closeButton
           onHide={()=> closeDispatchTask({type:'add'})}>
-            <Modal.Title>Новая задача</Modal.Title>
+            <Modal.Title>Поступила новая задача</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <textarea autoFocus type="text" ref={textArea} placeholder="Введите Вашу задачу"></textarea>
+            <p>Статус задачи: {""}</p>
+            <p>Номер задачи: №{""}</p>
+            <p><code>тело задачи из запроса</code></p>
           </Modal.Body>
 
           <Modal.Footer>
@@ -57,7 +59,6 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
       </Fade>
 
       <Task tasks={tasks} dispatchAdd={dispatchAdd}/>
-      {/* <Task tasks={tasks} dispatchAdd={dispatchAddCB}/> */}
 
     </ListTask>
   )
