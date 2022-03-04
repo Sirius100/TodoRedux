@@ -15,44 +15,46 @@ const ListTask = styled.div`
 `
 
 export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
-  const textArea = useRef();
+  console.log("mode: ", mode);
+  const textCode = useRef();
   const [tasks, dispatchAdd] = useReducer(reducer, [])
 
   const writeTasksState = ()=>{
-    if(!textArea.current.value){
-      closeDispatchTask({type:'add'});
+    // console.log("textCode: ", textCode.current.innerHTML);
+    if(!textCode){
+      closeDispatchTask({type:'request'});
       return;
     }
     dispatchAdd({type:"addTask", payload:{
-      id: tasks.length+1,
+      id: tasks.id,
       time: new Date(),
-      text: textArea.current.value,
+      text: textCode.current.innerHTML,
       isComplete: false,
       isDelete: false,
     }});
-    closeDispatchTask({type:'add'})
+    closeDispatchTask({type:'request', payload:{visibleForm:false}})
   }
 
   return (
 
     <ListTask>
-      <Fade in={mode}
+      <Fade in={mode.visibleForm}
       timeout={200}
       unmountOnExit>
         <Modal.Dialog>
           <Modal.Header closeButton
-          onHide={()=> closeDispatchTask({type:'add'})}>
+          onHide={()=> closeDispatchTask({type:'request'})}>
             <Modal.Title>Поступила новая задача</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>
-            <p>Статус задачи: {""}</p>
-            <p>Номер задачи: №{""}</p>
-            <p><code>тело задачи из запроса</code></p>
+            <p>Статус задачи: {mode.statusTask}</p>
+            <p>Номер задачи: №{mode.numberTask}</p>
+            <p><code ref={textCode}>{mode.textTask}</code></p>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="secondary" onClick={()=> closeDispatchTask({type:'add'})}>Close</Button>
+            <Button variant="secondary" onClick={()=> closeDispatchTask({type:'request'})}>Close</Button>
             <Button variant="primary" onClick={writeTasksState}>Add Task</Button>
           </Modal.Footer>
         </Modal.Dialog>

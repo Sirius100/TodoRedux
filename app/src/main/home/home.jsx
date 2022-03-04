@@ -25,12 +25,3 @@ export const Home = React.memo( ({textColor}) => {
 
   )
 })
-
-/*
-{
-  "userId": 1,
-  "id": 4,
-  "title": "et porro tempora",
-  "completed": true
-},
-*/

@@ -1,4 +1,3 @@
-// import PropTypes from 'prop-types';
 import React, {useReducer, useContext} from 'react';
 import reducer from '../../reducer/reducer';
 import { Button } from 'react-bootstrap';
@@ -23,10 +22,42 @@ const Wrapper = styled.div`
 `
 
 const AddButton = React.memo(({dispatchTask}) => {
+
+  const axios = require('axios').default;
+
+  const requestGet = {
+    user: '',
+    statusTask: '',
+    numberTask: '',
+    textTask: '',
+    // visibleForm: false,
+  }
+
+  const taskRequest = async () => {
+    await axios.get('https://jsonplaceholder.typicode.com/todos')
+    .then(function (response) {
+      // console.log("response.length: ", response.data[0]);
+      return response.data[0];
+    })
+    .catch(function (error) {
+      console.log(error);
+    })
+    .then(function (response) {
+      requestGet.user = response.userId;
+      requestGet.statusTask = response.completed? "Выполнена": "Не выполнена";
+      requestGet.textTask =  response.title;
+      requestGet.numberTask = response.id;
+      // requestGet.visibleForm = !requestGet.visibleForm;
+
+      return requestGet;
+    });
+    dispatchTask({type:'request', payload:requestGet})
+  }
+
   return(
     <>
-      <Button variant="danger" onClick={ ()=> dispatchTask({type:'add'})}>
-        Add
+      <Button variant="danger" onClick={ taskRequest }>
+        Запрос
       </Button>
     </>
   )
@@ -34,14 +65,14 @@ const AddButton = React.memo(({dispatchTask}) => {
 
 export const WrapperTask = () => {
 
-  const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm: false})
+  const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})
   const {themeBgBoolean} = useContext(AppContext)
 
   return (
 
       <Wrapper brd={themeBgBoolean.theme}>
         <AddButton dispatchTask={dispatchTask}/>
-        <ClistTask mode={AddTask.visibleForm} closeDispatchTask={dispatchTask}/>
+        <ClistTask mode={AddTask} closeDispatchTask={dispatchTask}/>
       </Wrapper>
 
   )

@@ -1,5 +1,3 @@
-import {taskRequest} from './requestPlacehold';
-
 export default function reducer(state, action) {
   switch(action.type) {
     /*раздел смены темы*/
@@ -9,17 +7,14 @@ export default function reducer(state, action) {
         theme: !state.theme,
       }
 
-    /*раздел вызов формы для ввода задачи*/
-    case 'add': // нажатие на кнопку "Add"
-    let request = taskRequest();
-    console.log("отработал код в reduce");
-    var task = null;
-    Promise.any([request]).then( (response) => response );
-    console.log("task in reducer: ", task);
-      return { visibleForm: !state.visibleForm}
+    /*раздел вызов формы для вывода задания*/
+    case 'request': // нажатие на кнопку "Запрос"
+      let st = {...state, ...action.payload, ...{visibleForm:!state.visibleForm}}
+      console.log("state from request st : ", st);
+      return st
+
     /*раздел изменения статуса задачи (добавить, выполненая задача, удалить задачу)*/
     case 'addTask': {// нажатие на кнопку "Add Task"
-      console.log('im run in addTask')
       return [
         ...state,
         {
