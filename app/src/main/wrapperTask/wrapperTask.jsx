@@ -1,6 +1,6 @@
 import React, {useReducer, useContext} from 'react';
 import reducer from '../../reducer/reducer';
-import { Button } from 'react-bootstrap';
+import {AddButton} from './addButton';
 import { ClistTask } from '../listTask/listTask';
 import styled from 'styled-components'
 import {AppContext} from '../../app/App';
@@ -21,49 +21,9 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
-const AddButton = React.memo(({dispatchTask}) => {
 
-  const axios = require('axios').default;
 
-  const requestGet = {
-    user: '',
-    statusTask: '',
-    numberTask: '',
-    textTask: '',
-    // visibleForm: false,
-  }
-
-  const taskRequest = async () => {
-    await axios.get('https://jsonplaceholder.typicode.com/todos')
-    .then(function (response) {
-      // console.log("response.length: ", response.data[0]);
-      return response.data[0];
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    .then(function (response) {
-      requestGet.user = response.userId;
-      requestGet.statusTask = response.completed? "Выполнена": "Не выполнена";
-      requestGet.textTask =  response.title;
-      requestGet.numberTask = response.id;
-      // requestGet.visibleForm = !requestGet.visibleForm;
-
-      return requestGet;
-    });
-    dispatchTask({type:'request', payload:requestGet})
-  }
-
-  return(
-    <>
-      <Button variant="danger" onClick={ taskRequest }>
-        Запрос
-      </Button>
-    </>
-  )
-})
-
-export const WrapperTask = () => {
+export const WrapperTask =() => {
 
   const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})
   const {themeBgBoolean} = useContext(AppContext)

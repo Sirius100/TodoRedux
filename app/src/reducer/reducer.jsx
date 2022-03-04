@@ -9,9 +9,7 @@ export default function reducer(state, action) {
 
     /*раздел вызов формы для вывода задания*/
     case 'request': // нажатие на кнопку "Запрос"
-      let st = {...state, ...action.payload, ...{visibleForm:!state.visibleForm}}
-      console.log("state from request st : ", st);
-      return st
+      return {...state, ...action.payload, ...{visibleForm:!state.visibleForm}, ...{numberTodo:action.numberTodo}}
 
     /*раздел изменения статуса задачи (добавить, выполненая задача, удалить задачу)*/
     case 'addTask': {// нажатие на кнопку "Add Task"

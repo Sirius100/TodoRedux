@@ -15,12 +15,10 @@ const ListTask = styled.div`
 `
 
 export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
-  console.log("mode: ", mode);
   const textCode = useRef();
   const [tasks, dispatchAdd] = useReducer(reducer, [])
 
   const writeTasksState = ()=>{
-    // console.log("textCode: ", textCode.current.innerHTML);
     if(!textCode){
       closeDispatchTask({type:'request'});
       return;
@@ -33,6 +31,10 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
       isDelete: false,
     }});
     closeDispatchTask({type:'request', payload:{visibleForm:false}})
+  }
+
+  const changeTextTask = ()=>{
+    console.log("im click");
   }
 
   return (
@@ -50,7 +52,7 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
           <Modal.Body>
             <p>Статус задачи: {mode.statusTask}</p>
             <p>Номер задачи: №{mode.numberTask}</p>
-            <p><code ref={textCode}>{mode.textTask}</code></p>
+            <p onClick={changeTextTask}><code ref={textCode}>{mode.textTask}</code></p>
           </Modal.Body>
 
           <Modal.Footer>
