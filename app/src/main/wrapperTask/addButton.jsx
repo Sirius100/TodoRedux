@@ -39,7 +39,6 @@ export const AddButton = React.memo(({dispatchTask}) => {
         return requestGet;
       });
       dispatchTask({type:'request', payload:requestGet})
-
   }
 
   return(

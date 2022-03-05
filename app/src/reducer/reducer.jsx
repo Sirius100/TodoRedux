@@ -37,6 +37,9 @@ export default function reducer(state, action) {
       })
       return [...state];
     }
+    case 'editTask':{
+      return !action.editTask;
+    }
     default:
       throw new Error("ошибка в reducer")
   }

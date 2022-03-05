@@ -14,7 +14,8 @@ const ListTask = styled.div`
   transition: all, .6s;
 `
 
-export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
+export const ClistTask = React.memo(({mode, closeDispatchTask}) => {
+
   const textCode = useRef();
   const [tasks, dispatchAdd] = useReducer(reducer, [])
 

@@ -1,7 +1,8 @@
 import React, {useReducer, useContext} from 'react';
 import reducer from '../../reducer/reducer';
 import {AddButton} from './addButton';
-import { ClistTask } from '../listTask/listTask';
+import { ClistTask } from '../listTask/clistTask';
+import { FormChangeTask } from './formChangeTask';
 import styled from 'styled-components'
 import {AppContext} from '../../app/App';
 import { baseTheme } from '../../theme/theme';
@@ -21,8 +22,10 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
+
 export const WrapperTask =() => {
 
+  let modeVisible = false; //при onDoubleClick меняет зачение на true и передается в компонент FormChangeTask для визуал-ии формы
   const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})
   const {themeBgBoolean} = useContext(AppContext)
 
@@ -30,8 +33,10 @@ export const WrapperTask =() => {
 
       <Wrapper brd={themeBgBoolean.theme}>
         <AddButton dispatchTask={dispatchTask}/>
-        <ClistTask mode={AddTask} closeDispatchTask={dispatchTask}/>
+        <ClistTask mode={AddTask} closeDispatchTask={dispatchTask} />
+        <FormChangeTask/>
       </Wrapper>
+
 
   )
 }

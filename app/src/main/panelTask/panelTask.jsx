@@ -1,10 +1,12 @@
 import React from 'react';
-import {useRef} from 'react';
+import {useRef, useReducer, useContext} from 'react';
 import styled from 'styled-components';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
 import Fade from 'react-bootstrap/Fade'
 import {Trash} from './trash';
+import reducer from '../../reducer/reducer';
+// import  {ModeVisible} from '../wrapperTask/wrapperTask';
 import './panelTask.css';
 
 const Task = styled(ListGroup.Item)`
@@ -16,6 +18,8 @@ const Task = styled(ListGroup.Item)`
 `
 
 export const PanelTask = React.memo(({task, dispatchTask}) => {
+
+  let editTask = false;
   const textTaskDivRef = useRef(); // если будет текст задачи менятся из state то удалить переменную
   const idChangeTest = useRef();
   const day = {0:"Вск", 1:"Пн", 2:"Вт", 3:"Ср", 4:"Чт", 5:"Пт", 6:"Сб"};
@@ -31,15 +35,15 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
   const deleteTask = ()=>{
     task.isDelete= !task.isDelete;
     dispatchTask({type:"isDelete"})
-
   }
 
   // изменяю задачу
-  const changeTextTask = (event)=>{
+  const changeTextTask = ()=>{
     let id = idChangeTest.current.textContent;
     let taskText = textTaskDivRef.current.textContent;
     console.log("taskText: ", taskText, "id: ", id, "task: ", task);
-    dispatchTask({type:"changeTask", id:id})
+
+    // dispatchTask({type:"changeTask", id:id})
   }
 
   return(

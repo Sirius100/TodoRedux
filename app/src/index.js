@@ -5,14 +5,13 @@ import WApp from './app/App';
 import { BrowserRouter } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 ReactDOM.render(
 
-  <React.StrictMode>
-
+    <React.StrictMode>
     <BrowserRouter>
       <WApp/>
     </BrowserRouter>
-
   </React.StrictMode>,
   document.getElementById('root')
 );
