@@ -21,8 +21,6 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
-
-
 export const WrapperTask =() => {
 
   const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})

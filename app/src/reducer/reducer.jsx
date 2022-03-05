@@ -29,6 +29,14 @@ export default function reducer(state, action) {
       const newState = state.filter((task) => !task.isDelete);
       return [...newState]
     }
+    case 'changeTask':{
+      state.forEach( (task) => {
+        if(task.id == action.id){
+          task.text = "text change"
+        }
+      })
+      return [...state];
+    }
     default:
       throw new Error("ошибка в reducer")
   }

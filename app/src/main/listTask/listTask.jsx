@@ -24,17 +24,13 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
       return;
     }
     dispatchAdd({type:"addTask", payload:{
-      id: tasks.id,
+      id: mode.numberTask,
       time: new Date(),
-      text: textCode.current.innerHTML,
+      text: mode.textTask,
       isComplete: false,
       isDelete: false,
     }});
     closeDispatchTask({type:'request', payload:{visibleForm:false}})
-  }
-
-  const changeTextTask = ()=>{
-    console.log("im click");
   }
 
   return (
@@ -52,7 +48,7 @@ export const ClistTask = React.memo(({mode, closeDispatchTask }) => {
           <Modal.Body>
             <p>Статус задачи: {mode.statusTask}</p>
             <p>Номер задачи: №{mode.numberTask}</p>
-            <p onClick={changeTextTask}><code ref={textCode}>{mode.textTask}</code></p>
+            <p><code ref={textCode}>{mode.textTask}</code></p>
           </Modal.Body>
 
           <Modal.Footer>

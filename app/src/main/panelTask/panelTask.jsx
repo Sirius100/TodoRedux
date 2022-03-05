@@ -1,4 +1,5 @@
 import React from 'react';
+import {useRef} from 'react';
 import styled from 'styled-components';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
@@ -15,6 +16,8 @@ const Task = styled(ListGroup.Item)`
 `
 
 export const PanelTask = React.memo(({task, dispatchTask}) => {
+  const textTaskDivRef = useRef(); // если будет текст задачи менятся из state то удалить переменную
+  const idChangeTest = useRef();
   const day = {0:"Вск", 1:"Пн", 2:"Вт", 3:"Ср", 4:"Чт", 5:"Пт", 6:"Сб"};
   // отмечаю задачу выполненой
 
@@ -30,15 +33,28 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
     dispatchTask({type:"isDelete"})
 
   }
+
+  // изменяю задачу
+  const changeTextTask = (event)=>{
+    let id = idChangeTest.current.textContent;
+    let taskText = textTaskDivRef.current.textContent;
+    console.log("taskText: ", taskText, "id: ", id, "task: ", task);
+    dispatchTask({type:"changeTask", id:id})
+  }
+
   return(
       <Task
         as="li"
         className="d-flex justify-content-between align-items-start ListGroupItem list-group-item"
         isComplete={task.isComplete}
       >
-        <div className="ms-2 me-auto bodyTextTask">
+        <div className="ms-2 me-auto bodyTextTask"  onDoubleClick={changeTextTask}>
           <div className="fw-bold bodyTextTask">{task.time.toLocaleTimeString()}</div>
-          {task.text}
+          <Badge bg="primary" pill ref={idChangeTest}>
+        {/*номер задачи*/}
+        {task.id}
+        </Badge>
+          <p ref={textTaskDivRef}>{task.text}</p>
         </div>
 
         <Fade in={task.isComplete}
