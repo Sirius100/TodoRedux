@@ -6,6 +6,7 @@ import { FormChangeTask } from './formChangeTask';
 import styled from 'styled-components'
 import {AppContext} from '../../app/App';
 import { baseTheme } from '../../theme/theme';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   width: 98%;
@@ -22,20 +23,32 @@ const Wrapper = styled.div`
   overflow-y: scroll;
 `
 
+/**forChangeTextTask используется
+ *для передачи коллбека в компонент panelTask
+*/
+
+export const forChangeTextTask = React.createContext();
 
 export const WrapperTask =() => {
 
-  let modeVisible = false; //при onDoubleClick меняет зачение на true и передается в компонент FormChangeTask для визуал-ии формы
   const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})
   const {themeBgBoolean} = useContext(AppContext)
+  //при onDoubleClick меняет зачение на true и передается в компонент FormChangeTask для визуал-ии формы
+  const [modeVisible, setmodeVisible] = useState(false);
+  const userChangeTask = ()=> {
+    setmodeVisible(!modeVisible);
+    console.log("userChangeTask run modeVisible: ", modeVisible);};
 
   return (
 
+    <forChangeTextTask.Provider value={userChangeTask}>
       <Wrapper brd={themeBgBoolean.theme}>
         <AddButton dispatchTask={dispatchTask}/>
         <ClistTask mode={AddTask} closeDispatchTask={dispatchTask} />
-        <FormChangeTask/>
+        <FormChangeTask props={{modeVisible, userChangeTask}}  />
       </Wrapper>
+    </forChangeTextTask.Provider>
+
 
 
   )

@@ -6,7 +6,7 @@ import Badge from 'react-bootstrap/Badge';
 import Fade from 'react-bootstrap/Fade'
 import {Trash} from './trash';
 import reducer from '../../reducer/reducer';
-// import  {ModeVisible} from '../wrapperTask/wrapperTask';
+import  {forChangeTextTask} from '../wrapperTask/wrapperTask';
 import './panelTask.css';
 
 const Task = styled(ListGroup.Item)`
@@ -19,7 +19,9 @@ const Task = styled(ListGroup.Item)`
 
 export const PanelTask = React.memo(({task, dispatchTask}) => {
 
-  let editTask = false;
+  const userChangeTask = useContext(forChangeTextTask);
+  // console.log("userChangeTask: ", userChangeTask);
+  // let editTask = false;
   const textTaskDivRef = useRef(); // если будет текст задачи менятся из state то удалить переменную
   const idChangeTest = useRef();
   const day = {0:"Вск", 1:"Пн", 2:"Вт", 3:"Ср", 4:"Чт", 5:"Пт", 6:"Сб"};
@@ -52,7 +54,8 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
         className="d-flex justify-content-between align-items-start ListGroupItem list-group-item"
         isComplete={task.isComplete}
       >
-        <div className="ms-2 me-auto bodyTextTask"  onDoubleClick={changeTextTask}>
+        <div className="ms-2 me-auto bodyTextTask"  onDoubleClick={userChangeTask}>
+
           <div className="fw-bold bodyTextTask">{task.time.toLocaleTimeString()}</div>
           <Badge bg="primary" pill ref={idChangeTest}>
         {/*номер задачи*/}
