@@ -26,26 +26,56 @@ const Wrapper = styled.div`
 /**forChangeTextTask используется
  *для передачи коллбека в компонент panelTask
 */
-
 export const forChangeTextTask = React.createContext();
 
 export const WrapperTask =() => {
 
+  const [tasks, dispatchAdd] = useReducer(reducer, [])
   const [AddTask, dispatchTask] = useReducer(reducer, {visibleForm:false})
+  /**
+   * idChangeTask хранит id задачи которая редактируется
+   */
+  const [idChangeTask, dispatchId] = useReducer(reducer, '');
+  const [id , setId] = useState('');
+  /**
+   * newText хранит текст введенной user-ом новой задачи
+   */
+  const [newText, setNewText] = useState('');
+
+  // themeBgBoolean отвечает за цветовую тему приложения
   const {themeBgBoolean} = useContext(AppContext)
-  //при onDoubleClick меняет зачение на true и передается в компонент FormChangeTask для визуал-ии формы
+
+  //при onDoubleClick меняет значение на true и передается в компонент FormChangeTask для визуал-ии формы
   const [modeVisible, setmodeVisible] = useState(false);
-  const userChangeTask = ()=> {
+
+  /**
+   * отвечает за показ формы для редактирования задачи
+   */
+  const userChangeTaskFormVisibleMode = ()=> {
     setmodeVisible(!modeVisible);
-    console.log("userChangeTask run modeVisible: ", modeVisible);};
+    setId(idChangeTask);
+    console.log("idChangeTask: ", id);
+    }
+
+  // изменяю задачу
+  const changeTextTaskSaveClick = () =>{
+    setmodeVisible(!modeVisible);
+    console.log("idChangeTask changeTextTaskSaveClick: ", idChangeTask);
+    dispatchAdd({type:'chahgeTask', payload:{id:idChangeTask, text:newText, time: new Date(),}})
+  }
+
+  //получаю текст задачи из textarrea компонента FormChangeTask
+  const newTextTask = (e,)=>{
+    setNewText(e.target.value); //собрал текст задачи
+  }
 
   return (
 
-    <forChangeTextTask.Provider value={userChangeTask}>
+    <forChangeTextTask.Provider value={{userChangeTaskFormVisibleMode, dispatchId, newText, idChangeTask}}>
       <Wrapper brd={themeBgBoolean.theme}>
         <AddButton dispatchTask={dispatchTask}/>
-        <ClistTask mode={AddTask} closeDispatchTask={dispatchTask} />
-        <FormChangeTask props={{modeVisible, userChangeTask}}  />
+        <ClistTask mode={AddTask} closeDispatchTask={dispatchTask} tasks={tasks} dispatchAdd={dispatchAdd}  />
+        <FormChangeTask props={{modeVisible, userChangeTaskFormVisibleMode, changeTextTaskSaveClick, newTextTask}}  />
       </Wrapper>
     </forChangeTextTask.Provider>
 

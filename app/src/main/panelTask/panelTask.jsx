@@ -1,11 +1,10 @@
 import React from 'react';
-import {useRef, useReducer, useContext} from 'react';
+import {useRef, useContext} from 'react';
 import styled from 'styled-components';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Badge from 'react-bootstrap/Badge';
 import Fade from 'react-bootstrap/Fade'
 import {Trash} from './trash';
-import reducer from '../../reducer/reducer';
 import  {forChangeTextTask} from '../wrapperTask/wrapperTask';
 import './panelTask.css';
 
@@ -18,16 +17,12 @@ const Task = styled(ListGroup.Item)`
 `
 
 export const PanelTask = React.memo(({task, dispatchTask}) => {
-
-  const userChangeTask = useContext(forChangeTextTask);
-  // console.log("userChangeTask: ", userChangeTask);
-  // let editTask = false;
+  const {userChangeTaskFormVisibleMode, dispatchId, idChangeTask} = useContext(forChangeTextTask);
   const textTaskDivRef = useRef(); // если будет текст задачи менятся из state то удалить переменную
   const idChangeTest = useRef();
   const day = {0:"Вск", 1:"Пн", 2:"Вт", 3:"Ср", 4:"Чт", 5:"Пт", 6:"Сб"};
+
   // отмечаю задачу выполненой
-
-
   const readyTask = ()=>{
     task.isComplete = !task.isComplete;
     dispatchTask({type:"isComplete"})
@@ -41,11 +36,9 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
 
   // изменяю задачу
   const changeTextTask = ()=>{
-    let id = idChangeTest.current.textContent;
-    let taskText = textTaskDivRef.current.textContent;
-    console.log("taskText: ", taskText, "id: ", id, "task: ", task);
-
-    // dispatchTask({type:"changeTask", id:id})
+    const idChangeTask = idChangeTest.current.textContent;
+    dispatchId({type:'idChangeTask', id:idChangeTask})
+    userChangeTaskFormVisibleMode();
   }
 
   return(
@@ -53,14 +46,19 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
         as="li"
         className="d-flex justify-content-between align-items-start ListGroupItem list-group-item"
         isComplete={task.isComplete}
-      >
-        <div className="ms-2 me-auto bodyTextTask"  onDoubleClick={userChangeTask}>
+        onDoubleClick={changeTextTask}>
 
-          <div className="fw-bold bodyTextTask">{task.time.toLocaleTimeString()}</div>
-          <Badge bg="primary" pill ref={idChangeTest}>
-        {/*номер задачи*/}
-        {task.id}
-        </Badge>
+        <div className="ms-2 me-auto bodyTextTask">
+          <div
+          className="fw-bold bodyTextTask">
+            {task.time.toLocaleTimeString()}
+          </div>
+
+          <Badge bg="primary" pill ref={idChangeTest} >
+          {/*номер задачи*/}
+          {task.id}
+          </Badge>
+
           <p ref={textTaskDivRef}>{task.text}</p>
         </div>
 
@@ -76,6 +74,7 @@ export const PanelTask = React.memo(({task, dispatchTask}) => {
         {/*день недели*/}
         {day[task.time.getDay()]}
         </Badge>
+
         <input type="checkbox" checked={task.isComplete} id="readyTask" onChange={readyTask} />
       </Task>
   )

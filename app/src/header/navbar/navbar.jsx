@@ -28,7 +28,6 @@ const SLink = styled(Link)`
     baseTheme.colorFont.thmLight:
     baseTheme.colorFont.thmDark};
   text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #464451, 0 0 30px #464451, 0 0 40px #464451, 0 0 55px #464451, 0 0 75px #464451;
-  }
 `
 
 
@@ -41,13 +40,13 @@ export const Navbar = React.memo( ({bg}) => {
       <ul className="styleNavbar-ul">
 
         <StyleLink bg={bg} >
-          <SLink bg={bg} className="routeLink" to="/">Home</SLink>
+          <SLink className="routeLink" to="/">Home</SLink>
         </StyleLink>
 
         &nbsp;
 
         <StyleLink bg={bg} >
-          <SLink bg={bg} className="routeLink" to="Todo">Todo</SLink>
+          <SLink className="routeLink" to="Todo">Todo</SLink>
         </StyleLink>
 
       </ul>
